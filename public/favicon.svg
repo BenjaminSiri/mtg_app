@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Pentagon arrangement of circles -->
+  <!-- Top circle (red) -->
+  <circle cx="100" cy="30" r="20" fill="#ef4444"/>
+  
+  <!-- Top right circle (blue) -->
+  <circle cx="165" cy="75" r="20" fill="#3b82f6"/>
+  
+  <!-- Bottom right circle (green) -->
+  <circle cx="140" cy="150" r="20" fill="#22c55e"/>
+  
+  <!-- Bottom left circle (purple) -->
+  <circle cx="60" cy="150" r="20" fill="#a855f7"/>
+  
+  <!-- Top left circle (orange) -->
+  <circle cx="35" cy="75" r="20" fill="#f97316"/>
+</svg>
