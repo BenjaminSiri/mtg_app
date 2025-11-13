@@ -77,7 +77,9 @@ const Home: React.FC = () => {
             if (searchString.trim() === '') {
                 const cards = await fetchMTGCards();
                 console.log(cards);
-                setCards(cards.Items);
+                const shuffled = cards.Items.sort(() => 0.5 - Math.random());
+                const randomCards = shuffled.slice(0, 10);
+                setCards(randomCards);
                 setLoading(false);
             } else {
                 const card = await fetchMTGCard(searchString.toLowerCase());
