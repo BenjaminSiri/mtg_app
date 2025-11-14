@@ -10,16 +10,20 @@ const StyledDiv = styled.div`
     color: #333;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 `;
 
 const SearchContainer = styled.div`
-
+    flex: 1;
+    min-width: 400px;
 `
 
 const ImageContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
+    flex: 2;
+    min-width: 500px;
 `;
 
 const StyledCard = styled(Card)`
