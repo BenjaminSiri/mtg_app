@@ -6,6 +6,8 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { fetchMTGCards, fetchMTGCard, fetchMTGCardImage } from '../Util/api/mtg';
 
+import loadingGif from '../../public/gifs/loading.gif';
+
 const StyledDiv = styled.div`
     color: #333;
     display: flex;
@@ -91,6 +93,7 @@ const Home: React.FC = () => {
 
     const [cards, setCards] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [loadingImage, setLoadingImage] = useState<boolean>(false);
     const [searchString, setSearchString] = useState<string>('');
     const [imageURI, setImageURI] = useState<string>('');
     const [noMatch, setNoMatch] = useState<boolean>(false);
@@ -122,8 +125,10 @@ const Home: React.FC = () => {
     }
 
     const handleCardClick = async (cardName: string) => {
+        setLoadingImage(true);
         const scryfallJSON = await fetchMTGCardImage(cardName);
         setImageURI(scryfallJSON.image_uris.normal);
+        setLoadingImage(false);
     }
     
     return (
@@ -159,6 +164,7 @@ const Home: React.FC = () => {
         </SearchContainer>
         <ImageContainer>
             {imageURI && <StyledImage src={imageURI} alt="MTG Card" />}
+            {loadingImage && <img src={loadingGif} alt="Loading..." />}
         </ImageContainer>
     </StyledDiv>
     );
