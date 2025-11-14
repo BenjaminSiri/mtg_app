@@ -15,3 +15,12 @@ export async function fetchMTGCard(input: string) {
   }
   return response.json();
 }
+
+export async function fetchMTGCardImage(cardName: string) {
+  const IMAGE_URL = `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(cardName)}`;
+  const response = await fetch(IMAGE_URL);
+  if (!response.ok) {
+    throw new Error(`Error fetching MTG card image: ${response.statusText}`);
+  }
+  return response.json();
+}

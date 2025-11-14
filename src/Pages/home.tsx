@@ -4,10 +4,22 @@ import { Button, TextField, Stack, Card, CardContent } from '@mui/material';
 
 import SearchIcon from '@mui/icons-material/Search';
 
-import { fetchMTGCards, fetchMTGCard } from '../Util/api/mtg';
+import { fetchMTGCards, fetchMTGCard, fetchMTGCardImage } from '../Util/api/mtg';
 
 const StyledDiv = styled.div`
     color: #333;
+    display: flex;
+    flex-direction: row;
+`;
+
+const SearchContainer = styled.div`
+
+`
+
+const ImageContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
 `;
 
 const StyledCard = styled(Card)`
@@ -15,7 +27,6 @@ const StyledCard = styled(Card)`
     margin-bottom: 10px;
     height: 50px;
     width: 400px;
-    border: 1px solid red;
     
     &:hover {
         background-color: #e0e0e0;
@@ -34,6 +45,7 @@ const StyledCardContent = styled(CardContent)`
 
 const StyledStack = styled(Stack)`
     margin-left: 20px;
+    margin-right: 20px;
 `;
 
 const CardHeader = styled.div`
@@ -46,6 +58,7 @@ const InputDiv = styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
     height: 50px;
+    min-width: 300px;
 `;
 
 const StyledTextField = styled(TextField)`
@@ -62,16 +75,24 @@ const StyledTextField = styled(TextField)`
 const StyledButton = styled(Button)`
     height: 100%;
     margin-left: 10px;
-`; 
+`;
+
+const StyledImage = styled.img`
+    margin-top: 20px;
+    height: 600px;
+    width: auto;
+`;
 
 const Home: React.FC = () => {
 
     const [cards, setCards] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [searchString, setSearchString] = useState<string>('');
+    const [imageURI, setImageURI] = useState<string>('');
 
     const handleFetchCards = async () => {
         setLoading(true);
+        setImageURI('');
         setCards([]);
         try {
             if (searchString.trim() === '') {
@@ -92,38 +113,44 @@ const Home: React.FC = () => {
             }
     }
 
-    const handleCardClick = () => {
-        alert('Card clicked!');
+    const handleCardClick = async (cardName: string) => {
+        const scryfallJSON = await fetchMTGCardImage(cardName);
+        setImageURI(scryfallJSON.image_uris.normal);
     }
     
     return (
     <StyledDiv>
-        <InputDiv>
-            <StyledTextField
-                label="Search cards"
-                variant="outlined"
-                size="small"
-                value={searchString}
-                onChange={(e) => setSearchString(e.target.value)}
-            />
-            <StyledButton variant="contained" color="primary" onClick={handleFetchCards}>
-                <SearchIcon />
-            </StyledButton>
-        </InputDiv>
-        <StyledStack>
-            {loading && <p>Loading...</p>}
-            {cards.map((card) => (
-                <StyledCard key={card.id_name} variant='outlined' onClick={handleCardClick}>
-                    <StyledCardContent sx={{m:0,p:0}}>
-                        <CardHeader>
-                            <h4 style={{ margin: 0, padding: 0 }}>{card.name}</h4>
-                            <h4 style={{ margin: 0, padding: 0 }}>{card.manaCost}</h4>
-                        </CardHeader>
-                        <p style={{ margin: 0, padding: 0 }}>{card.type}</p>
-                    </StyledCardContent>
-                </StyledCard>
-            ))}
-        </StyledStack>
+        <SearchContainer>
+            <InputDiv>
+                <StyledTextField
+                    label="Search cards"
+                    variant="outlined"
+                    size="small"
+                    value={searchString}
+                    onChange={(e) => setSearchString(e.target.value)}
+                />
+                <StyledButton variant="contained" color="primary" onClick={handleFetchCards}>
+                    <SearchIcon />
+                </StyledButton>
+            </InputDiv>
+            <StyledStack>
+                {loading && <p>Loading...</p>}
+                {cards.map((card) => (
+                    <StyledCard key={card.id_name} variant='outlined' onClick={() => handleCardClick(card.name)}>
+                        <StyledCardContent sx={{m:0,p:0}}>
+                            <CardHeader>
+                                <h4 style={{ margin: 0, padding: 0 }}>{card.name}</h4>
+                                <h4 style={{ margin: 0, padding: 0 }}>{card.manaCost}</h4>
+                            </CardHeader>
+                            <p style={{ margin: 0, padding: 0 }}>{card.type}</p>
+                        </StyledCardContent>
+                    </StyledCard>
+                ))}
+            </StyledStack>
+        </SearchContainer>
+        <ImageContainer>
+            {imageURI && <StyledImage src={imageURI} alt="MTG Card" />}
+        </ImageContainer>
     </StyledDiv>
     );
 };
