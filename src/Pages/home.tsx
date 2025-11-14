@@ -17,7 +17,10 @@ const StyledDiv = styled.div`
 
 const SearchContainer = styled.div`
     flex: 1;
-    max-width: 90%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 `
 
 const ImageContainer = styled.div`
@@ -25,14 +28,15 @@ const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
     flex: 2;
-    max-width: 90%;
+    max-width: 100%;
 `;
 
 const StyledCard = styled(Card)`
     padding: 5px;
     margin-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
     height: 50px;
-    width: 400px;
     
     &:hover {
         background-color: #e0e0e0;
@@ -43,8 +47,6 @@ const StyledCardContent = styled(CardContent)`
     padding: 0;
     margin: 0;
     width: 100%;
-    min-width: 200px;
-    max-width: 400px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -52,8 +54,9 @@ const StyledCardContent = styled(CardContent)`
 `;
 
 const StyledStack = styled(Stack)`
-    margin-left: 20px;
-    margin-right: 20px;
+    width: 100%;
+    min-width: 200px;
+    max-width: 600px;
 `;
 
 const CardHeader = styled.div`
@@ -86,7 +89,7 @@ const StyledButton = styled(Button)`
 `;
 
 const StyledImage = styled.img`
-    margin-top: 20px;
+    margin: 20px;
     width: 100%;
     min-width: 200px;
     max-width: 400px;
@@ -170,7 +173,7 @@ const Home: React.FC = () => {
         </SearchContainer>
         <ImageContainer>
             {imageURI && <StyledImage src={imageURI} alt="MTG Card" />}
-            {loadingImage && <img src={loadingGif} alt="Loading..." style={{height: '100px', width: '100px', marginTop: '250px'}} />}
+            {loadingImage && <img src={loadingGif} alt="Loading..." style={{height: '100px', width: '100px', marginTop: '200px'}} />}
         </ImageContainer>
     </StyledDiv>
     );
