@@ -7,7 +7,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import { fetchMTGCards, fetchMTGCard, fetchMTGCardImage } from '../Util/api/mtg';
 
 import loadingGif from '../gifs/loading.gif';
-import { set } from 'yaml/dist/schema/yaml-1.1/set';
 
 const StyledDiv = styled.div`
     color: #333;
@@ -18,7 +17,7 @@ const StyledDiv = styled.div`
 
 const SearchContainer = styled.div`
     flex: 1;
-    min-width: 400px;
+    max-width: 90%;
 `
 
 const ImageContainer = styled.div`
@@ -26,7 +25,7 @@ const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
     flex: 2;
-    min-width: 500px;
+    max-width: 90%;
 `;
 
 const StyledCard = styled(Card)`
@@ -44,6 +43,8 @@ const StyledCardContent = styled(CardContent)`
     padding: 0;
     margin: 0;
     width: 100%;
+    min-width: 200px;
+    max-width: 400px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -86,8 +87,11 @@ const StyledButton = styled(Button)`
 
 const StyledImage = styled.img`
     margin-top: 20px;
-    height: 600px;
-    width: auto;
+    width: 100%;
+    min-width: 200px;
+    max-width: 400px;
+    height: auto;
+    object-fit: contain;
 `;
 
 const Home: React.FC = () => {
