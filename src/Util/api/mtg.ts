@@ -9,11 +9,17 @@ export async function fetchMTGCards() {
 }
 
 export async function fetchMTGCard(input: string) {
-  const response = await fetch(`${BASE_URL}/cards/${input}`);
-  if (!response.ok) {
-    throw new Error(`Error fetching MTG cards: ${response.statusText}`);
+  try {
+    const response = await fetch(`${BASE_URL}/cards/${input}`);
+    if (!response.ok) {
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching card:', error);
+    return null;
   }
-  return response.json();
 }
 
 export async function fetchMTGCardImage(cardName: string) {

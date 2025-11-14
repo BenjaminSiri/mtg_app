@@ -89,28 +89,32 @@ const Home: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [searchString, setSearchString] = useState<string>('');
     const [imageURI, setImageURI] = useState<string>('');
+    const [noMatch, setNoMatch] = useState<boolean>(false);
 
     const handleFetchCards = async () => {
         setLoading(true);
+        setNoMatch(false);
         setImageURI('');
         setCards([]);
         try {
             if (searchString.trim() === '') {
                 const cards = await fetchMTGCards();
-                console.log(cards);
                 const shuffled = cards.Items.sort(() => 0.5 - Math.random());
                 const randomCards = shuffled.slice(0, 10);
                 setCards(randomCards);
                 setLoading(false);
             } else {
                 const card = await fetchMTGCard(searchString.toLowerCase());
-                console.log(card);
-                setCards([card]);
+                if (card) {
+                    setCards([card]);
+                } else {
+                    setNoMatch(true);
+                }
                 setLoading(false);
             }
-            } catch (error) {
+        } catch (error) {
             console.error(error);
-            }
+        }
     }
 
     const handleCardClick = async (cardName: string) => {
@@ -135,6 +139,7 @@ const Home: React.FC = () => {
             </InputDiv>
             <StyledStack>
                 {loading && <p>Loading...</p>}
+                {noMatch && <p>No matching cards found.</p>}
                 {cards.map((card) => (
                     <StyledCard key={card.id_name} variant='outlined' onClick={() => handleCardClick(card.name)}>
                         <StyledCardContent sx={{m:0,p:0}}>
