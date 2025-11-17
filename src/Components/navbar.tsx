@@ -27,7 +27,7 @@ const NavBar: React.FC = () => {
 
     const signOutRedirect = () => {
       const clientId = "550bardua4qg3ndplcfq09joh2";
-      const logoutUri = "https://master.d1ip0clgd67zj0.amplifyapp.com";
+      const logoutUri = "https://master.d1ip0clgd67zj0.amplifyapp.com/logout";
       const cognitoDomain = "https://us-east-2cznlqswok.auth.us-east-2.amazoncognito.com";
 
       auth.removeUser();
