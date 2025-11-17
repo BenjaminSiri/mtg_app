@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import {Menu, MenuItem, Button} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useAuth } from "react-oidc-context";
 
 const StyledNav = styled.nav`
     width: 100%;
@@ -19,9 +19,19 @@ const NavBar: React.FC = () => {
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
       };
-      const handleClose = () => {
+
+    const handleClose = () => {
         setAnchorEl(null);
-      };
+    };
+
+    const auth = useAuth();
+
+    const signOutRedirect = () => {
+      const clientId = "550bardua4qg3ndplcfq09joh2";
+      const logoutUri = "<logout uri>";
+      const cognitoDomain = "https://<user pool domain>";
+      window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+    };
 
     return (
         <StyledNav>
@@ -46,8 +56,8 @@ const NavBar: React.FC = () => {
                 },
                 }}
             >
-                <MenuItem onClick={handleClose}>Login</MenuItem>
-                <MenuItem onClick={handleClose}>Sign Up</MenuItem>
+                <MenuItem onClick={() => auth.signinRedirect()}>Login</MenuItem>
+                <MenuItem onClick={() => signOutRedirect()}>Sign Out</MenuItem>
             </Menu>
         </StyledNav>
     );
