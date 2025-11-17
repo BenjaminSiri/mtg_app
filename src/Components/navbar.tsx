@@ -13,6 +13,7 @@ const StyledNav = styled.nav`
 `;
 
 const NavBar: React.FC = () => {
+    const auth = useAuth();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -24,12 +25,13 @@ const NavBar: React.FC = () => {
         setAnchorEl(null);
     };
 
-    const auth = useAuth();
-
     const signOutRedirect = () => {
       const clientId = "550bardua4qg3ndplcfq09joh2";
-      const logoutUri = window.location.origin;
+      const logoutUri = "https://master.d1ip0clgd67zj0.amplifyapp.com";
       const cognitoDomain = "https://us-east-2cznlqswok.auth.us-east-2.amazoncognito.com";
+
+      auth.removeUser();
+
       window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
     };
 
@@ -58,7 +60,7 @@ const NavBar: React.FC = () => {
             >
                 { !auth.isAuthenticated && <MenuItem onClick={() => auth.signinRedirect()}>Login</MenuItem>}
                 { auth.isAuthenticated && <MenuItem >Account</MenuItem>}
-                { auth.isAuthenticated && <MenuItem onClick={() => signOutRedirect()}>Sign Out</MenuItem>}
+                { auth.isAuthenticated && <MenuItem onClick={() => auth.removeUser()}>Sign Out</MenuItem>}
             </Menu>
         </StyledNav>
     );
