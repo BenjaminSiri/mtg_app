@@ -56,8 +56,9 @@ const NavBar: React.FC = () => {
                 },
                 }}
             >
-                <MenuItem onClick={() => auth.signinRedirect()}>Login</MenuItem>
-                <MenuItem onClick={() => signOutRedirect()}>Sign Out</MenuItem>
+                { !auth.isAuthenticated && <MenuItem onClick={() => auth.signinRedirect()}>Login</MenuItem>}
+                { auth.isAuthenticated && <MenuItem >Account</MenuItem>}
+                { auth.isAuthenticated && <MenuItem onClick={() => signOutRedirect()}>Sign Out</MenuItem>}
             </Menu>
         </StyledNav>
     );
